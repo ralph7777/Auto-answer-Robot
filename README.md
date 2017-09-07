@@ -6,3 +6,5 @@ Even the function and content of this program is simple, it shows the constructi
 It required core technologies of full-stack web developing, including establishments of front-end web pages (HTML, CSS, JavaScript, JSP, JQuery) and back-end controllers/models (Java) plus database system (MySQL).
 
 Besides, this program utilized Maven for project building, and MyBatis for Object Relational Mapping and persistence layer. 
+
+Read 'Program Introduction.pdf' for more details.
