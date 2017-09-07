@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2009-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- Define reference name -->
+<mapper namespace="Player">
+
+<!-- Define how to store the query results -->
+  <resultMap type="com.ralph.bean.Player" id="PlayerResult">
+    <id column="id" jdbcType="VARCHAR" property="id"/>
+    <result column="name" jdbcType="VARCHAR" property="name"/>
+    <result column="team" jdbcType="VARCHAR" property="team"/>
+    <result column="number" jdbcType="VARCHAR" property="number"/>
+  </resultMap>
+  
+<!-- Define SQL command -->
+  <select id="queryPlayerList" parameterType="com.ralph.bean.Player" resultMap="PlayerResult">
+    SELECT id,name,team,number FROM playerinfo WHERE 1=1
+    <!-- If statement to joint SQL command-->
+    <if test="name != null and !&quot;&quot;.equals(name.trim())">
+    	AND name LIKE '%' #{name} '%'
+    </if>
+    <if test="team != null and !&quot;&quot;.equals(team.trim())">
+    	AND team LIKE '%' #{team} '%'
+    </if>
+  </select>
+  
+  <delete id="deleteOne" parameterType="int">
+  	DELETE FROM playerinfo WHERE id = #{_parameter}
+  </delete>
+  
+  <delete id="deleteBatch" parameterType="java.util.List">
+  	DELETE FROM playerinfo WHERE id IN (
+  		<foreach collection="list" item="item" separator=",">
+  			#{item}
+  		</foreach>
+  	)
+  </delete>
+  
+  <insert id="addOne" parameterType="com.ralph.bean.Player">
+    INSERT INTO playerinfo
+		SET name=#{name}, team=#{team}, number=#{number}
+  </insert>
+  
+
+<!-- 
+  <select id="version" parameterType="long" resultType="int">
+    SELECT version FROM user WHERE id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="delete" parameterType="UserAlias">
+    DELETE FROM user WHERE id = #{id:INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="UserAlias" useGeneratedKeys="false">
+    INSERT INTO user
+    ( id,
+    username,
+    password,
+    administrator
+    )
+    VALUES
+    ( #{id},
+    #{username,jdbcType=VARCHAR},
+    #{password.encrypted:VARCHAR},
+    #{administrator,jdbcType=BOOLEAN}
+    )
+  </insert>
+
+  <update id="update" parameterType="UserAlias">
+    UPDATE user SET
+    username = #{username,jdbcType=VARCHAR},
+    password = #{password.encrypted,jdbcType=VARCHAR},
+    administrator = #{administrator,jdbcType=BOOLEAN}
+    WHERE
+    id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="isUniqueUsername" parameterType="map" resultType="boolean">
+    SELECT (count(*) = 0)
+    FROM user
+    WHERE ((#{userId,jdbcType=BIGINT} IS NOT NULL AND id != #{userId,jdbcType=BIGINT}) OR #{userId,jdbcType=BIGINT} IS
+    NULL)  
+    AND (username = #{username,jdbcType=VARCHAR})
+  </select>
+-->
+</mapper>
