@@ -1,4 +1,5 @@
-# Auto-answer-Robot
+# Auto-answer-Robot (1.0)
+
 This application builds “an auto-answer robot”, a webpage that can response to users’ different questions in real time. This function is very popular among various websites to provide customers the information they are looking for more efficiently and precisely.
  
 Even the function and content of this program is simple, it shows the construction of a database Web page project built on Java EE. 
